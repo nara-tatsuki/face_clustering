@@ -92,6 +92,8 @@ def execute_face_trim(input_dir_trim,output_dir_trim):
         file_path = os.path.join(output_dir_trim, f"{image_info[0]}")
         image = image_info[1]
         detect_image_face(file_path, image, cascade_filepath)
+    delete_path = os.path.dirname(input_dir_trim)
+    shutil.rmtree(delete_path)
 
 # 画像の水増し
 def execute_scratch_image(input_dir_scratch,output_dir_test,output_dir_scratch):
@@ -127,9 +129,11 @@ def execute_scratch_image(input_dir_scratch,output_dir_test,output_dir_scratch):
             output_path = os.path.join(output_dir_scratch, f"{filename}_{str(idx)}{extension}")
             print(f"出力ファイル（絶対パス）:{output_path}")
             cv2.imwrite(output_path, image)
+    delete_path = os.path.dirname(input_dir_scratch)
+    shutil.rmtree(delete_path)
 
-# フォルダ名を連番で置換
-def rename_images(directory, prefix, extension):
+# フォルダ名を連番で置換 移動
+def rename_images(directory, new_dir, prefix, extension):
     # ディレクトリ内のファイル一覧を取得
     files = os.listdir(directory)
     
@@ -141,8 +145,9 @@ def rename_images(directory, prefix, extension):
             # 新しいファイル名を作成
             new_name = f"{prefix}{i+1:03}{extension}"  # 001, 002 など
             src = os.path.join(directory, filename)
-            dst = os.path.join(directory, new_name)
+            dst = os.path.join(new_dir, new_name)
 
             # ファイル名の変更
             os.rename(src, dst)
             print(f"Renamed: {src} -> {dst}")
+    shutil.rmtree(directory)
