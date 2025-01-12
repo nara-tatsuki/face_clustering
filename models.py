@@ -25,7 +25,7 @@ def load_images(image_directory):
 
 # ラベル付け
 def labeling_images(image_file_list):
-    labels = {"chiba": 0, "yokohama": 1, "abe": 2, "akanishi": 3}
+    labels = {"cute_soft": 0, "cute_hard": 1, "fresh_soft": 2, "fresh_hard": 3, "elegant_soft": 4, "elegant_hard": 5, "cool_soft": 6, "cool_hard": 7}
     x_data, y_data = [], []
     for idx, (file_name, image) in enumerate(image_file_list):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -36,7 +36,7 @@ def labeling_images(image_file_list):
                 label = value
                 break
         if label == -1:
-            raise ValueError(f"ファイル名に有効な人物名が含まれていません: {file_name}")
+            raise ValueError(f"ファイル名に有効なタイプ名が含まれていません: {file_name}")
         y_data.append(label)
     return np.array(x_data), np.array(y_data)
 
@@ -76,7 +76,7 @@ def build_model(input_shape, num_classes):
 # メイン処理
 def main():
     print("===================================================================")
-    print("4人用モデル学習")
+    print("8タイプモデル学習")
     print("===================================================================")
 
     TRAIN_IMAGE_DIR = "./model_image"
@@ -85,7 +85,7 @@ def main():
     OUTPUT_MODEL_FILE = "model.h5"
     OUTPUT_PLOT_FILE = "model.png"
 
-    num_classes = 4
+    num_classes = 8
     batch_size = 32
     epochs = 20
     target_size = (64, 64)

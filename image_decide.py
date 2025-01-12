@@ -85,8 +85,8 @@ def main():
         return RETURN_FAILURE
     model = keras.models.load_model(INPUT_MODEL_PATH)
 
-    # ラベル定義（4人分）
-    labels = ["cute", "fresh", "elegant", "cool"]
+    # ラベル定義（8タイプ）
+    labels = ["cute_soft", "cute_hard", "fresh_soft", "fresh_hard", "elegant_soft", "elegant_hard", "cool_soft", "cool_hard"]
 
     # 顔認識
     cascade_filepath = r"C:\Users\htt06\programing\python\face_clustering\haarcascade_frontalface_default.xml"
