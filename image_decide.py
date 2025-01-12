@@ -5,7 +5,12 @@ import keras
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def detect_face(model, cascade_filepath, image, labels):
+    # エラー処理: 画像が None の場合
+    if image is None:
+        raise ValueError("画像が読み込めませんでした。ファイルパスを確認してください。")
+
     # 画像をBGR形式からRGB形式へ変換
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -51,6 +56,7 @@ def detect_face(model, cascade_filepath, image, labels):
 
     return image
 
+
 def detect_who(model, face_image, labels):
     # 予測
     result = model.predict(face_image)
@@ -59,37 +65,39 @@ def detect_who(model, face_image, labels):
     name_number_label = np.argmax(result)
     return labels[name_number_label]
 
-RETURN_SUCCESS = 0
-RETURN_FAILURE = -1
 
 # 入力モデルパス
 INPUT_MODEL_PATH = "./model/model.h5"
+image_file_path = r'C:\Users\htt06\programing\python\face_clustering\sample_image\image.png' 
+cascade_filepath = r"C:/Users/htt06/programing/python/face_clustering/haarcascade_frontalface_default.xml"
 
 def main():
     print("===================================================================")
     print("顔認識 Keras 利用版")
-    print("学習モデルと指定した画像ファイルをもとに4人の中から分類します。")
+    print("学習モデルと指定した画像ファイルをもとに8タイプの中から分類します。")
     print("===================================================================")
 
-    image_file_path = r'C:\Users\htt06\programing\python\face_clustering\sample_image'
-
     # 画像ファイルの読み込み
+    if not os.path.exists(image_file_path):
+        print(f"画像ファイルが見つかりません: {image_file_path}")
+        sys.exit(1)
     image = cv2.imread(image_file_path)
-    if image is None:
-        print(f"画像ファイルを読み込めません。{image_file_path}")
-        return RETURN_FAILURE
 
     # モデルファイルの読み込み
     if not os.path.exists(INPUT_MODEL_PATH):
-        print("モデルファイルが存在しません。")
-        return RETURN_FAILURE
+        print(f"モデルファイルが見つかりません: {INPUT_MODEL_PATH}")
+        sys.exit(1)
     model = keras.models.load_model(INPUT_MODEL_PATH)
+
+    # Haar Cascade ファイルの存在確認
+    if not os.path.exists(cascade_filepath):
+        print(f"Haar Cascade ファイルが見つかりません: {cascade_filepath}")
+        sys.exit(1)
 
     # ラベル定義（8タイプ）
     labels = ["cute_soft", "cute_hard", "fresh_soft", "fresh_hard", "elegant_soft", "elegant_hard", "cool_soft", "cool_hard"]
 
     # 顔認識
-    cascade_filepath = r"C:\Users\htt06\programing\python\face_clustering\haarcascade_frontalface_default.xml"
     result_image = detect_face(model, cascade_filepath, image, labels)
 
     # 結果の表示
@@ -97,7 +105,6 @@ def main():
     plt.axis('off')
     plt.show()
 
-    return RETURN_SUCCESS
 
 if __name__ == "__main__":
     main()

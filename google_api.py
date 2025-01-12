@@ -3,6 +3,7 @@ import httplib2
 import os
 import hashlib
 from googleapiclient.discovery import build
+import time
 
 
 def fetch_image_urls(api_key, cse_key, search_word):
@@ -12,7 +13,7 @@ def fetch_image_urls(api_key, cse_key, search_word):
     img_urls = []
 
     start_index = 1
-    for page_num in range(10):
+    for page_num in range(15):
         print(f"Fetching page number: {page_num + 1}")
         try:
             response = service.cse().list(

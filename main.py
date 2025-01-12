@@ -11,10 +11,10 @@ API_KEY = os.getenv('GOOGLE_API_KEY')
 CUSTOM_SEARCH_ENGINE = os.getenv('CUSTOM_SEARCH_ENGINE')
 
 # 学習させる芸能人の名前
-search_word = '赤西仁'
+search_word = '伊野尾慧'
 
 # その芸能人の顔タイプ
-dir_name = 'cool'
+dir_name = 'cute_soft_ino'
 
 CURRENT_PATH = r'C:\Users\htt06\programing\python\face_clustering'
 INPUT_DIR_TRIM = os.path.join(CURRENT_PATH ,dir_name + "\*")
