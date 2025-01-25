@@ -11,10 +11,10 @@ API_KEY = os.getenv('GOOGLE_API_KEY')
 CUSTOM_SEARCH_ENGINE = os.getenv('CUSTOM_SEARCH_ENGINE')
 
 # 学習させる芸能人の名前
-search_word = '千葉雄大'
+search_word = '赤西仁 待ち受け'
 
 # その芸能人の顔タイプ
-dir_name = 'cute_soft_chiba'
+dir_name = 'cool_hard_akanishi'
 
 CURRENT_PATH = r'C:\Users\htt06\programing\python\face_clustering'
 INPUT_DIR_TRIM = os.path.join(CURRENT_PATH ,dir_name + "\*")
@@ -31,9 +31,9 @@ google_api(API_KEY, CUSTOM_SEARCH_ENGINE, search_word,dir_name)
 # 顔画像切り取り
 execute_face_trim(INPUT_DIR_TRIM,OUTPUT_DIR_TRIM)
 
-# # 画像水増し
-# execute_scratch_image(INPUT_DIR_SCRATCH,OUTPUT_DIR_TEST,OUTPUT_DIR_SCRATCH)
+# 画像水増し
+execute_scratch_image(INPUT_DIR_SCRATCH,OUTPUT_DIR_TEST,OUTPUT_DIR_SCRATCH)
 
-# # ファイル名変更
-# rename_images(OUTPUT_DIR_SCRATCH,MODEL_DIR,dir_name + "_", ".jpg")
-# rename_images(OUTPUT_DIR_TEST,TEST_DIR,dir_name + "_", ".jpg")
+# ファイル名変更
+rename_images(OUTPUT_DIR_SCRATCH,MODEL_DIR,dir_name + "_", ".jpg")
+rename_images(OUTPUT_DIR_TEST,TEST_DIR,dir_name + "_", ".jpg")
